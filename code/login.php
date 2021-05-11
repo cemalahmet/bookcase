@@ -41,29 +41,32 @@ else{
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title> Login</title> 
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
-        body{ font: 20px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
+        body{ font: 25px sans-serif; }
+        .wrapper{width: 480px; height: 480px ; padding: 30px; }
     </style>
 </head>
 <center><p>
 <body>
     <div class="wrapper">
-    
-        <h2>Login</h2>
+
+    <p class="login_text" >Login</p> 
+
         <style type="text/css">
-        h2{ font: 40px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-
-    </style>
+        </style>
         <form action="login.php" method="post">
-            <label>Username  </label><input type = "text" name = "username" class = "box"/><span class="error">* <?php echo $nameErr;?></span><br /><br />
-            <label>Password  </label><input type = "password" name = "password" class = "box" /><span class="error">* <?php echo $passErr;?></span><br/><br />
-            <input type="submit" class="btn btn-primary" value="Login">
-
+            <label>Username </label><input type = "text" placeholder = "username" name = "username" class = "box"/><span class="error"> <?php echo  "</br>"; echo $nameErr;?></span><br /><br />
+            <label>Password </label><input type = "password" placeholder = "password" name = "password" class = "box" /><span class="error"> <?php echo  "</br>"; echo $passErr;?></span><br/><br />
+           
+            <input type="submit" class="btn btn-primary" style="width:100%; padding: 10px;font-size: medium;" value="Login">
+          
+            <p class = "login-signup-text"style= "font-size: 2rem; font-weignt:100;"> Don't have an accout? <a href = "signup.php">Sign Up Here</a></
+    
         </form>
+   
     </div>    
 </body>
 </p></center>
