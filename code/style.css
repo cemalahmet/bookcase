@@ -1,0 +1,36 @@
+body{
+    background: linear-gradient(rgba(0, 0, 50,0.2), rgba(0, 0, 50, 0.5)), url(image.jpg);
+    background-size: cover;
+    background-position: center; 
+}
+
+.wrapper{
+    position: relative;
+    padding-bottom: 0%;
+    max-width: 500px;
+    float: none;
+    margin: 50px 50px;
+    background: rgba(218, 220, 228, 0.85);  
+}
+
+
+.login_text{  
+    font-size: 6rem;
+}
+
+.box {
+    background-color: white;
+    color: black;
+    padding: 8px 8px;
+    margin: 1px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+
+  label {
+    text-align: left;
+    float: left;
+    font-size: medium;
+}
