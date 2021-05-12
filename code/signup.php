@@ -68,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label>Password </label><input type = "password" placeholder = "password" name = "password" class = "box" /><span class="error"> <?php echo  "</br>"; echo $passErr;?></span><br/><br />
             <label>Email </label><input type = "email" placeholder = "email" name = "e-mail" class = "box" /><span class="error"> <?php echo  "</br>";  echo $mailErr;?></span><br/><br />
-            <input type="submit" class="btn btn-primary" style="width:100%; padding: 10px;font-size: medium;" value="Sign Up">
+            <input type="submit" class="btn btn-primary" style="width:100%; background-color:#1e90ff ; padding: 10px;font-size: medium;" value="Sign Up">
                   
             <p class = "signup-login-text"style= "font-size: 2rem; font-weignt:100;"> Already have an accout? <a href = "login.php">Login Here</a></
     
