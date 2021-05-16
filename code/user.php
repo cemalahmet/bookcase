@@ -5,7 +5,7 @@ include("config.php");
 session_start();
 
 $user_id = "26";
-$profile_id = "26";
+$profile_id = "21";
 
 $user_info_query = "select * from users, accounts where user_id = '$profile_id' and account_id = user_id";
 $user_infoQ = mysqli_query($conn, $user_info_query);
@@ -16,7 +16,7 @@ $rating_info_query = "select count(*) as no_ratings, avg(rating) as avg_ratings 
 $rating_infoQ = mysqli_query($conn, $rating_info_query);
 $rating_info = mysqli_fetch_array($rating_infoQ);
 
-$bookshelves_query = "select (bs_name, count(*) as cnt) from bookshelves, bookshelf_include where user_id = '$profile_id' group by bs_name";
+$bookshelves_query = "select bs_name from bookshelves where user_id = '$profile_id'";
 $bookshelves = mysqli_query($conn, $bookshelves_query);
 
 $lists_query = "select list_name from lists where user_id = '$profile_id'";
@@ -153,8 +153,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($bookshelves != false) {
                 while ($row = $bookshelves->fetch_array(MYSQLI_ASSOC)) {
                     echo "<tr>";
-                    echo "<td>" . $row['bs_name'] . "</td>";
-                    echo "<td>" . $row['cnt'] . "</td>";
+                    $name = $row['bs_name'];
+                    echo "<td>" . $name . "</td>";
+                    $query = "select count(*) as cnt from bookshelf_includes where bs_name = '$name' and user_id = '$profile_id'";
+                    $cntQ = mysqli_query($conn, $query);
+                    $cnt = $cntQ->fetch_array(MYSQLI_ASSOC);
+                    if ($cnt == false) {
+                        echo "<td> 0 </td>";
+                    } else {
+                        echo "<td>" . $cnt['cnt'] . "</td>";
+                    }
                     echo "</tr>";
                 }
             }
