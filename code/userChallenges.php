@@ -4,40 +4,10 @@ session_start();
 
 $userId = $_SESSION['login_user'];
 
-$myusername = "";
-$myaccountid = "";
-$mypassword = "";
-$nameErr = "";
-$passErr = "";
-
-echo $userId;
-
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    if (empty($_POST["username"])) {
-        $nameErr = "Name is required";
-    }
-    if(empty($_POST["password"])) {
-        $passErr = "password is required";
-    }
-else{
-    $mypassword = $_POST['password']; 
-    $myusername = $_POST['username'];
-
-    $query = "SELECT account_id, username, password FROM accounts WHERE password = '$mypassword'  AND username = '$myusername'";
-    $result = mysqli_query( $conn, $query );
 
 
-    $count = mysqli_num_rows($result);
 
-    if(mysqli_num_rows($result)==1){
-        $row = $result->fetch_assoc();
-        $myaccountid = $row['account_id'];
-        $_SESSION['login_user'] = $myaccountid;
-        header("location: home.php");        
-    }
-}
-}
+
 
 ?>
 
@@ -74,7 +44,7 @@ else{
     <?php
     $userId = $_SESSION['login_user'];
 
-    $sql = "SELECT challange_name, Info, due_date FROM challenges";
+    $sql = "SELECT challange_name, Info, due_date FROM challenges where challange_name not in (select challange_name from joins where user_id = $userId);";
     $result = mysqli_query($conn,$sql);
     ?>
 
