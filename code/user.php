@@ -3,9 +3,11 @@
 
 include("config.php");
 session_start();
+$user_id = $_SESSION['login_user'];
 
-$user_id = "26";
-$profile_id = "21";
+
+$profile_id = $_GET['profile_id'];
+
 
 $user_info_query = "select * from users, accounts where user_id = '$profile_id' and account_id = user_id";
 $user_infoQ = mysqli_query($conn, $user_info_query);

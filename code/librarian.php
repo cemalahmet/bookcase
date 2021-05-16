@@ -56,7 +56,7 @@ else{
         <ul>
             <li><a href = "login.php">Log out</a></li>
             <li><a href = "#">Profile</a></li>
-            <li><a href = "#">Challenges</a></li>
+            <li><a href = "challenges.php">Challenges</a></li>
             <style type="text/css">
              .wrapper ul li{  display: inline; padding: 1% }
     </style>

@@ -266,7 +266,7 @@ create table bookshelf_includes(
   bs_name varchar(20) not null, 
   user_id int not null, 
   b_id int not null, 
-  primary key (bs_name, b_id), 
+  primary key (bs_name, user_id, b_id),
   foreign key(b_id) references books(b_id), 
   foreign key(user_id, bs_name) references bookshelves(user_id, bs_name)
 );

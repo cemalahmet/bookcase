@@ -54,3 +54,10 @@ body{
     background-color: #747d8c; 
     color: black;
   }
+  
+  .table_legenda {
+    table-layout: fixed;
+  }
+  .table_legenda td {
+    overflow-wrap: break-word;
+  }

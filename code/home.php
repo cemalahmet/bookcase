@@ -56,8 +56,8 @@ else{
     <div class="wrapper">
         <ul>
             <li><a href = "login.php">Log out</a></li>
-            <li><a href = "#">Profile</a></li>
-            <li><a href = "#">Challenges</a></li>
+            <li><a href = "user.php?profile_id=<?php echo $userId ?>" >Profile</a></li>
+            <li><a href = "userChallenges.php">Challenges</a></li>
             <style type="text/css">
              .wrapper ul li{  display: inline; padding: 1% }
     </style>
