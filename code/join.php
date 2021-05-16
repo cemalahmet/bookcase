@@ -15,15 +15,13 @@ if(isset($_POST['join'])){
     else{
     $goal = $_POST['goal']; 
 
-    echo $goal;
-    echo "heey";
     $query = "INSERT INTO joins  
         VALUES ('$challange_name', '$userId', '$goal')";
     $results = mysqli_query($conn, $query);
 
     echo $query;
     echo $results;
-    //header("location: join.php");
+    header("location: userChallenges.php");
     }
 }
 

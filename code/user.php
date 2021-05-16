@@ -183,6 +183,47 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 ?>
             </table>
+
+            <?php
+    $userId = $_SESSION['login_user'];
+
+    $sql = "SELECT challange_name, Info, due_date FROM challenges where challange_name  in (select challange_name from joins where user_id = $userId);";
+    $result = mysqli_query($conn,$sql);
+    ?>
+
+    <p class="login_text" > Joined Challenges </p>
+
+
+    <table border="1" class="table_legenda" width="100%">
+     <tr>
+    <th><p style="font-family: Arial, Helvetica, sans-serif;;font-size:170%;padding: 10px 10px;  ">Challenge Name</p></th>
+    <th><p style="font-family: Arial, Helvetica, sans-serif;;font-size:170%;padding: 10px 10px;  ">Challenge Info</p></th>
+    <th><p style="font-family: Arial, Helvetica, sans-serif;;font-size:170%;padding: 10px 10px;  ">Due Date</p></th>
+    </tr>
+    
+
+    
+    <?php
+    if ($result_set = $conn->query($sql)) {
+        while($row = $result_set->fetch_array(MYSQLI_ASSOC)){
+            $challange_name=$row['challange_name'];
+            $Info=$row['Info'];
+            $due_date=$row['due_date'];
+            ?>
+            <tr>
+            <td> <p style="font-family: Arial, Helvetica, sans-serif;;font-size:170%;padding: 10px 10px;  ">  <?php echo "$challange_name"?>  </p></td>
+            <td> <p style="font-family: Arial, Helvetica, sans-serif;;font-size:170% ;padding: 10px 10px; "><?php echo "$Info"?> </p></td>
+            <td> <p style="font-family: Arial, Helvetica, sans-serif;;font-size:170%; padding: 10px 10px; "><?php echo "$due_date"?></p> </td>
+            </tr> 
+        <?php 
+
+        }
+    }
+    ?>
+   
+
+    </table>
+
       </div>
 
     </div>
