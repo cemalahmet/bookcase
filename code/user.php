@@ -24,7 +24,7 @@ $bookshelves = mysqli_query($conn, $bookshelves_query);
 $lists_query = "select list_name from lists where user_id = '$profile_id'";
 $lists = mysqli_query($conn, $lists_query);
 
-$friends_query = "select u.username from friends f, accounts u where 
+$friends_query = "select username, account_id from friends f, accounts u where 
         (u.account_id = f.user_id and f.friend_id ='$profile_id')
         or
         (u.account_id = f.friend_id and f.user_id='$profile_id')";
@@ -67,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="wrapper">
         <ul>
             <li><a href = "login.php">Log out</a></li>
-            <li><a href = "#">Profile</a></li>
+            <li><a href = "user.php?profile_id=<?php echo $user_id ?>" >Profile</a></li>
             <li><a href = "home.php">Home</a></li>
             <style type="text/css">
              .wrapper ul li {  display: inline; padding: 1% }
@@ -115,17 +115,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "0";
             echo " friends";
             echo "</p>";
-            echo "<p>";
+            echo "<ul>";
             if ($friends != false and mysqli_num_rows($friends) != 0) {
-                $row = $friends->fetch_array(MYSQLI_ASSOC);
 
-                echo $row['username'];
                 while($row = $friends->fetch_array(MYSQLI_ASSOC)){
-                    echo ", ";
+                    echo "<li> <a href = 'user.php?profile_id=";
+                    echo $row['account_id'];
+                    echo "'>";
                     echo $row['username'];
+                    echo "</a></li>";
                 }
             }
-            echo "</p>";
+            echo "</ul>";
             ?>
             <p class="login_text"> Followed Authors: </p>
             <?php
@@ -136,17 +137,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "0";
             echo " followed authors";
             echo "</p>";
-            echo "<p>";
-            if ($authors != false and mysqli_num_rows($authors) != 0) {
-                $row = $authors->fetch_array(MYSQLI_ASSOC);
+            echo "<ul>";
 
-                echo $row['author_name'];
+            if ($authors != false and mysqli_num_rows($authors) != 0) {
+
                 while($row = $authors->fetch_array(MYSQLI_ASSOC)){
-                    echo ", ";
+                    echo "<li> <a href = 'author.php?author_id=";
+                    echo $row['author_id'];
+                    echo "'>";
                     echo $row['author_name'];
+                    echo "</a></li>";
                 }
             }
-            echo "</p>";
+            echo "</ul>";
             ?>
             <p class="login_text" > Bookshelves</p>
         <table border = "2">

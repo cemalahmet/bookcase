@@ -3,8 +3,8 @@
 include("config.php");
 session_start();
 
-$author_id = "1";
-$user_id = "26";
+$author_id = $_GET['author_id'];
+$user_id = $_SESSION['login_user'];
 
 $author_info_query = "SELECT author_name, biography
                           FROM authors
@@ -56,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="wrapper">
         <ul>
             <li><a href = "login.php">Log out</a></li>
-            <li><a href = "#">Profile</a></li>
+            <li><a href = "user.php?profile_id=<?php echo $user_id ?>" >Profile</a></li>
             <li><a href = "home.php">Home</a></li>
             <style type="text/css">
              .wrapper ul li {  display: inline; padding: 1% }

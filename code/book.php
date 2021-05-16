@@ -5,7 +5,7 @@ session_start();
 
 $b_id = "";
 $edition_no = "";
-$user_id = "";
+$user_id = $_SESSION['login_user'];
 
     $book_info_query =  "SELECT * FROM books NATURAL JOIN editions NATURAL JOIN publishes NATURAL JOIN publishers
                                 WHERE '$b_id' = b_id AND '$edition_no' = edition_no";
@@ -95,7 +95,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="wrapper">
         <ul>
             <li><a href = "login.php">Log out</a></li>
-            <li><a href = "#">Profile</a></li>
+            <li><a href = "user.php?profile_id=<?php echo $user_id ?>" >Profile</a></li>
             <li><a href = "home.php">Home</a></li>
             <style type="text/css">
                 .wrapper ul li {  display: inline; padding: 1% }
