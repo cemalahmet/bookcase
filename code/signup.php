@@ -49,6 +49,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         VALUES ('$user_id', '$newDate' )";
             $results = mysqli_query($conn, $query);
 
+            $query = "INSERT INTO bookshelves VALUES ('To read', '$user_id' ),
+                                                      ('Currently Reading', '$user_id'  ),
+                                                      ('Read', '$user_id' )";
+
+            $results = mysqli_query($conn, $query);
+
             if (!empty($_POST['AuthorCheck'])){
                 $query = "INSERT INTO author_accounts () 
                             VALUES ('$user_id')";
@@ -62,8 +68,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
