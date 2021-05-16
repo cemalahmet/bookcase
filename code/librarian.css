@@ -8,9 +8,9 @@ body{
     position: relative;
     float: none;
     margin-top: 80px;
-    margin-bottom: 8px;
-    margin-right: 30px;
-    margin-left: 30px;
+    margin-bottom: 85px;
+    margin-right: 110px;
+    margin-left: 110px;
     background: rgba(218, 220, 228, 0.85);  
 }
 
@@ -35,3 +35,22 @@ body{
     float: left;
     font-size: medium;
 }
+
+.block {
+    display: block;
+    width: 80%;
+    background-color: #ff7f50;
+    color: white;
+    padding: 20px 10px;
+    font-size: 40px;
+    cursor: pointer;
+    text-align: center;
+    font-style: italic;
+    margin-top: 30px;
+    
+  }
+  
+  .block:hover {
+    background-color: #747d8c; 
+    color: black;
+  }

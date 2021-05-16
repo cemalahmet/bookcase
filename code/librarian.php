@@ -44,10 +44,9 @@ else{
 <head>
     <meta charset="UTF-8">
     <title> Login</title> 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="librarian.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
-
        .wrapper{ background: rgba(218, 220, 228);  }
     </style>
 </head>
@@ -65,14 +64,15 @@ else{
         </ul>
         <div class="main-text">
 
-        <p class="login_text" >Login</p> 
-
-            <style type="text/css">
-            </style>
-            <form action="login.php" method="post">
-                
-               
-            </form>
+        <p class="login_text" >Librarian Page</p> 
+        
+        <button class="block" onclick="location.href='addChallange.php'">Create A Challenge</button>
+        <button class="block" onclick="location.href='addbook.php'">Add Book</button>      
+        <button class="block" onclick="location.href='addbook.php'">Add Author</button>      
+        <button class="block" onclick="location.href='addbook.php'">Update Author Info</button>
+        
+        <button class="block" onclick="location.href='addbook.php'">Update Book Info</button>
+              
          </div> 
     </div>    
 </body>

@@ -10,6 +10,7 @@ $passErr = "";
 $mailErr = "";
 $usernameErr="";
 
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (empty($_POST["username"])) {
@@ -33,22 +34,43 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_num_rows($res_u) > 0) {
         $nameErr = "This username already taken"; 	}
         else{
-           $query = "INSERT INTO accounts (username, e_mail, password) 
-      	    	  VALUES ('$myusername', '$mymail', '$mypassword')";
-           $results = mysqli_query($conn, $query);
-           header("location: registered.php");
+            $query = "INSERT INTO accounts (username, e_mail, password) 
+                    VALUES ('$myusername', '$mymail', '$mypassword')";
+            $results = mysqli_query($conn, $query);
+
+            //get account_id to insert into users
+            $query = "SELECT account_id FROM accounts WHERE password = '$mypassword'  AND username = '$myusername'";
+            $result = mysqli_query( $conn, $query );
+            $row = $result->fetch_assoc();
+            $user_id = $row['account_id'];
+            $newDate = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO users (user_id, join_date) 
+                        VALUES ('$user_id', '$newDate' )";
+            $results = mysqli_query($conn, $query);
+
+            if (!empty($_POST['AuthorCheck'])){
+                $query = "INSERT INTO author_accounts () 
+                            VALUES ('$user_id')";
+                $results1 = mysqli_query($conn, $query);
+
+            }
+
+            header("location: registered.php");
         }
     }
 }
 
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title> Login</title> 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="signup.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         body{ font: 25px sans-serif; }
@@ -68,8 +90,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label>Password </label><input type = "password" placeholder = "password" name = "password" class = "box" /><span class="error"> <?php echo  "</br>"; echo $passErr;?></span><br/><br />
             <label>Email </label><input type = "email" placeholder = "email" name = "e-mail" class = "box" /><span class="error"> <?php echo  "</br>";  echo $mailErr;?></span><br/><br />
+           
+            <label class="container">Author
+            <input type="checkbox" name='AuthorCheck' value="Author"> <br/>
+            </label></span>
+
             <input type="submit" class="btn btn-primary" style="width:100%; background-color:#1e90ff ; padding: 10px;font-size: medium;" value="Sign Up">
-                  
+
             <p class = "signup-login-text"style= "font-size: 2rem; font-weignt:100;"> Already have an accout? <a href = "login.php">Login Here</a></
     
         </form>
@@ -78,3 +105,4 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 </p></center>
 </html>
+
