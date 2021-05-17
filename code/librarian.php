@@ -68,7 +68,7 @@ else{
         
         <button class="block" onclick="location.href='addChallange.php'">Create A Challenge</button>
         <button class="block" onclick="location.href='addbook.php'">Add Book</button>      
-        <button class="block" onclick="location.href='addbook.php'">Add Author</button>      
+        <button class="block" onclick="location.href='addAuthor.php'">Add Author</button>      
         <button class="block" onclick="location.href='addbook.php'">Update Author Info</button>
         
         <button class="block" onclick="location.href='addbook.php'">Update Book Info</button>

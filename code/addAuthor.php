@@ -70,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $results = mysqli_query($conn, $query);
             }
 
-           // header("location: authorAdded.php");
+            header("location: authorAdded.php");
         }
     }
 }
@@ -93,6 +93,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="wrapper">
 
     <p class="text" >Add Author</p> 
+    <div id="center_button">
+        <button onclick="location.href='librarian.php'">Back</button>
+    </div>  
 
         <style type="text/css">
         </style>

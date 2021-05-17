@@ -112,7 +112,7 @@ create table author_accounts(
   foreign key(author_id) references users(user_id) 
   );
 create table authors(
-  author_id int not null, 
+  author_id int not null auto_increment, 
   author_name varchar(15) not null, 
   biography varchar(1000) not null, 
   primary key (author_id)
