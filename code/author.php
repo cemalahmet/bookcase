@@ -24,19 +24,18 @@ $book_info = mysqli_query( $conn, $book_info_query );
 function follow($conn, $user_id, $author_id) {
     $query = "select * from follows where user_id = '$user_id' and author_id = '$author_id'";
     $already_followed = mysqli_query( $conn, $query);
-    if (mysqli_num_rows($already_followed) == 0) {
+    if ($already_followed == false or mysqli_num_rows($already_followed) == 0) {
         $query = "insert into follows values ('$user_id', '$author_id')";
         mysqli_query( $conn, $query);
-        return 1;
     } else {
         $query = "delete from follows where user_id = '$user_id' and author_id = '$author_id'";
         mysqli_query( $conn, $query);
-        return 0;
     }
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-  follow($conn, $user_id, $author_id);
+    follow($conn, $user_id, $author_id);
+    header("location: author.php");
 }
 
 ?>
@@ -101,12 +100,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <th>Year</th></tr>
 
         <?php
-
-        while($row = $book_info->fetch_array(MYSQLI_ASSOC)){
+        if ($row != false and mysqli_num_rows($book_info) != 0) {
+            while ($row = $book_info->fetch_array(MYSQLI_ASSOC)) {
                 echo "<tr>";
                 echo "<td>" . $row['title'] . "</td>";
                 echo "<td>" . $row['year'] . "</td>";
                 echo "</tr>";
+            }
         }
         ?>
         </table>

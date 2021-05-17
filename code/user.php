@@ -8,6 +8,9 @@ $user_id = $_SESSION['login_user'];
 
 $profile_id = $_GET['profile_id'];
 
+if ($profile_id == "")
+    $profile_id = $_SESSION['profile_id'];
+
 
 $user_info_query = "select * from users, accounts where user_id = '$profile_id' and account_id = user_id";
 $user_infoQ = mysqli_query($conn, $user_info_query);
@@ -51,6 +54,7 @@ function create_list($conn, $user_id, $list_name) {
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $_SESSION['profile_id'] = $profile_id;
     if (isset($_POST['add_friend'])) {
         add_friend($conn, $user_id, $profile_id);
     }
@@ -58,6 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $list_name = $_POST['list_name'];
         create_list($conn, $user_id, $list_name);
     }
+
 }
 ?>
 <html lang="en">
@@ -175,7 +180,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo $row['bs_name'];
                     echo "</a>";
                     echo "</td>";
-                    $query = "select count(*) as cnt from bookshelf_includes where bs_name = '$name' and user_id = '$profile_id'";
+                    $bs_name = $row['bs_name'];
+                    $query = "select count(*) as cnt from bookshelf_includes where bs_name = '$bs_name' and user_id = '$profile_id'";
                     $cntQ = mysqli_query($conn, $query);
                     $cnt = $cntQ->fetch_array(MYSQLI_ASSOC);
                     if ($cnt == false) {

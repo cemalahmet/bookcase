@@ -68,6 +68,7 @@ $user_id = $_SESSION['login_user'];
     }
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $b_id = $_GET['b_id'];
     if (isset($_POST['make_comment'])) {
         $comment = $_POST["comment"];
         $newDate = date('Y-m-d H:i:s');
@@ -154,7 +155,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <label>Rate book </label>
             <form action='book.php' method='post'>
                 <input type = "text" placeholder = "rating" name = "rating" class = "box"/>
-                <input type= "submit" name="rate" class="btn btn-primary" style="width:100%;  background-color:#1e90ff ; padding: 10px;font-size: medium;" value="Login">
+                <input type= "submit" name="rate" class="btn btn-primary" style="width:100%;  background-color:#1e90ff ; padding: 10px;font-size: medium;" value="Rate">
             </form>
 
             <label>Comment </label>
