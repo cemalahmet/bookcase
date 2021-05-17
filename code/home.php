@@ -4,24 +4,18 @@ session_start();
 
 $userId = $_SESSION['login_user'];
 
-
-
-
-if(isset($post['search'])){
+if(isset($_POST['search'])){
     $title = $_POST['bytitle'];
     echo $title;
-    $sql = "SELECT * FROM books natural join editions where books.title LIKE (%'$title%')";
-    $result = filtertable($sql);
-
-
+    $sql = "SELECT * FROM books natural join editions where books.title LIKE '%".$title."%'";
+    $result = filtertable($conn, $sql);
 }
 else{
     $sql = "SELECT * FROM books natural join editions";
-    $result = filtertable($sql);
+    $result = filtertable($conn, $sql);
 }
 
-function filterTable($query){
-    include("config.php");
+function filterTable($conn, $query){
     $filter_Result = mysqli_query($conn,$query);
     return $filter_Result;
 }
@@ -73,8 +67,8 @@ function filterTable($query){
 
     
             <?php
-            if ($result_set = $conn->query($sql)) {
-                while($row = $result_set->fetch_array(MYSQLI_ASSOC)){
+            if ($result != false && mysqli_num_rows($result) != 0) {
+                while($row = $result->fetch_array(MYSQLI_ASSOC)){
                     $title=$row['title'];
                     $page_count =$row['page_count'];
                     $year =$row['year'];
