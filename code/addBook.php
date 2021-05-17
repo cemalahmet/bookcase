@@ -23,7 +23,7 @@ $emptyErr = "";
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (empty($_POST['bookTitle']) || empty($_POST['publishedYear']) || empty($_POST['pageCount']) || empty($_POST['author']) ) {
-        $emptyErr = "Something is missing!";
+        $emptyErr = "Required information is missing!";
     }
     else{
         $publishedYear = $_POST['publishedYear'];
@@ -132,7 +132,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <center><p>
 <body>
     <div class="wrapper">
-
+    <div id="center_button">
+        <button onclick="location.href='librarian.php'">Back</button>
+    </div>  
     <p class="text" >Add Book</p> 
 
         <style type="text/css">
