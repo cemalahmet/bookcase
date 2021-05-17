@@ -12,6 +12,10 @@ $user_id = $_SESSION['login_user'];
     $book_infoQ = mysqli_query( $conn, $book_info_query );
     $book_info = mysqli_fetch_array($book_infoQ);
 
+    $author_query = "select * from writes natural join authors where b_id = '$b_id'";
+    $author_infoQ = mysqli_query( $conn, $author_query );
+    $author_info = mysqli_fetch_array($author_infoQ);
+
     $rating_query = "select avg(rating) as rating, count(*) as cnt from rate where '$b_id' = b_id";
     $ratingQ = mysqli_query( $conn, $rating_query );
     $rating = mysqli_fetch_array($ratingQ);
@@ -111,6 +115,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo $book_info["year"];
                     echo ")"
                 ?> </p>
+            <p>
+                <?php
+                    echo "<a href = 'author.php?author_id=";
+                    echo $author_info['author_id'];
+                    echo "'>";
+                    echo $author_info['author_name'];
+                    echo "</a>";
+                ?>
+            </p>
             <p class="login_text"> Genres: </p>
             <p>
             <?php
@@ -147,7 +160,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <label>Comment </label>
             <form action='book.php' method='post'>
             <input type = "text" placeholder = "comment" name = "comment" class = "box"/>
-            <input type="submit" name="make_comment" class="btn btn-primary" style="width:100%;  background-color:#1e90ff ; padding: 10px;font-size: medium;" value="Login">
+            <input type="submit" name="make_comment" class="btn btn-primary" style="width:100%;  background-color:#1e90ff ; padding: 10px;font-size: medium;" value="Make Comment">
             </form>
 
             <p class="login_text"> Comments: </p>
