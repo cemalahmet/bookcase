@@ -74,7 +74,16 @@ function filterTable($conn, $query){
                     $year =$row['year'];
                     ?>
                     <tr>
-                    <td> <p style="font-family: Arial, Helvetica, sans-serif;;font-size:170%;padding: 10px 10px;  ">  <?php echo "$title"?>  </p></td>
+                        <?php
+                    echo "<td> <p style='font-family: Arial, Helvetica, sans-serif;;font-size:170%;padding: 10px 10px;  '>";
+                        echo "<a href = 'book.php?b_id=";
+                        echo $row['b_id'];
+                        echo "'>";
+                        echo $title;
+                        echo "</a>";
+                        echo "</p>";
+                        echo "</td>";
+                    ?>
                     <td> <p style="font-family: Arial, Helvetica, sans-serif;;font-size:170% ;padding: 10px 10px; "><?php echo "$page_count"?> </p></td>
                     <td> <p style="font-family: Arial, Helvetica, sans-serif;;font-size:170%; padding: 10px 10px; "><?php echo "$year"?></p> </td>
                     </tr> 

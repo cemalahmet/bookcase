@@ -85,7 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo "<tr>";
                         echo "<td>";
                         echo $i;
-                        echo "<td>";
+                        echo "</td>";
                         echo "<td>";
                         echo "<a href = 'book.php?b_id=";
                         echo $row['b_id'];
