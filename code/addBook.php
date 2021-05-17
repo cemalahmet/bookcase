@@ -36,24 +36,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $cover = $_POST['cover'];
         $series = $_POST['series'];
 
+
+        echo $publishedYear;
+        echo $edition;
+        echo $language;
+        echo $translator;
+        
+
         $query = "SELECT title, year FROM books WHERE year = '$publishedYear'  AND title = '$bookTitle'";
         $result1 = mysqli_query( $conn, $query );
 
         $query = "SELECT edition_no FROM editions WHERE edition_no = '$edition'";
         $result2 = mysqli_query( $conn, $query );
 
-        if(mysqli_num_rows($result1)==1 && mysqli_num_rows($result2)==1){
+        if((mysqli_num_rows($result1) > 0 ) && ( mysqli_num_rows($result2) > 0 ) ){
             $emptyErr = "This book already registered in the system!";
         }
-        else if(mysqli_num_rows($result)==0){
-            $row = $result->fetch_assoc();
-            $bookid = $row['b_id'];
-            $_SESSION['book_id'] = $bookid;
-
-            $query = "INSERT INTO books (b_id, cover, title, year) 
-                    VALUES ('$bookid', '$cover', '$bookTitle', '$publishedYear')";
+        else{
+            $query = "INSERT INTO books (cover, title, year) 
+                    VALUES ('$cover', '$bookTitle', '$publishedYear')";
             $results = mysqli_query($conn, $query);
             
+            $query = "SELECT b_id, title, year FROM books WHERE year = '$publishedYear'  AND title = '$bookTitle'";
+            $result1 = mysqli_query( $conn, $query );
+
+            $row = $result1->fetch_assoc();
+            $bookid = $row['b_id'];
+
             // EDITION INSERTION
 
             $query = "INSERT INTO editions (b_id, edition_no, page_count, language, translator_name) 
@@ -128,11 +137,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <style type="text/css">
         </style>
-        <form action="add_Book.php" method="post">
+        <form action="addBook.php" method="post">
             <label>Cover page: </label>
             <form action="/action_page.php">
                 <input type="file" id="myFile" name="cover" style="text-align: left; float: left; font-size: medium;"><br/><br />
-            </form>
+            
             <label>Book Title: </label><input type = "text" placeholder = "book title" name = "bookTitle" class = "box"/><span class="error"><?php echo  "</br>"; echo $emptyErr;?></span><br/><br />
             <label>Published Year: </label><input type = "text" placeholder = "published year" name = "publishedYear" class = "box" /><span class="error"><?php echo  "</br>"; echo $emptyErr;?></span><br/><br />
             <label>Page Count: </label><input type = "text" placeholder = "count" name = "pageCount" class = "box" /><span class="error"><?php echo  "</br>"; echo $emptyErr;?></span><br/><br />
@@ -151,11 +160,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="c1"> Action</label>
             <input type="checkbox" id= "c4" name='genre4' value="Action" style="text-align: left; float: left; font-size: medium;">
             <label for="c1"> Romance</label>
-            <input type="checkbox" id= "c5" name='genre5' value="Romance" style="text-align: left; float: left; font-size: medium;">
+            <input type="checkbox" id= "c5" name='genre5' value="Romance" style="text-align: left; float: left; font-size: medium;"><br />
 
-            <span class="error"> <?php echo  "</br>"; echo $emptyErr;?></span><br/><br />
-            <input type="submit" class="btn btn-primary" style="width:10%;  background-color:#ff7f50 ; padding: 10px;font-size: medium;" value="Add">
-          
+            
+            <input type="submit" style="width:10%;  background-color:#ff7f50 ; padding: 10px;font-size: medium;" value="Add">
+            </form>
         </form>
    
     </div>    
