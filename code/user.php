@@ -24,7 +24,7 @@ $bookshelves = mysqli_query($conn, $bookshelves_query);
 $lists_query = "select list_name, user_id from lists where user_id = '$profile_id'";
 $lists = mysqli_query($conn, $lists_query);
 
-$friends_query = "select username, account_id from friends f, accounts u where 
+$friends_query = "select distinct username, account_id from friends f, accounts u where 
         (u.account_id = f.user_id and f.friend_id ='$profile_id')
         or
         (u.account_id = f.friend_id and f.user_id='$profile_id')";
