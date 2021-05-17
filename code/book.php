@@ -3,12 +3,11 @@
 include("config.php");
 session_start();
 
-$b_id = "";
-$edition_no = "";
+$b_id = $_GET['b_id'];
 $user_id = $_SESSION['login_user'];
 
-    $book_info_query =  "SELECT * FROM books NATURAL JOIN editions NATURAL JOIN publishes NATURAL JOIN publishers
-                                WHERE '$b_id' = b_id AND '$edition_no' = edition_no";
+    $book_info_query =  "SELECT * FROM books
+                                WHERE '$b_id' = b_id";
     $book_infoQ = mysqli_query( $conn, $book_info_query );
     $book_info = mysqli_fetch_array($book_infoQ);
 
@@ -17,8 +16,8 @@ $user_id = $_SESSION['login_user'];
     $author_info = mysqli_fetch_array($author_infoQ);
 
     $rating_query = "select avg(rating) as rating, count(*) as cnt from rate where '$b_id' = b_id";
-    $ratingQ = mysqli_query( $conn, $rating_query );
-    $rating = mysqli_fetch_array($ratingQ);
+    $rating = mysqli_query( $conn, $rating_query );
+
 
     $genres_query = "select genre from book_genre where '$b_id' = b_id";
     $genres = mysqli_query( $conn, $genres_query);
@@ -56,7 +55,7 @@ $user_id = $_SESSION['login_user'];
     }
 
     function make_comment($conn, $b_id, $user_id, $comment, $date) {
-        $query = "insert into comments values ('$comment', '$date')";
+        $query = "insert into comments (comment, comments.date) values ('$comment', '$date')";
         mysqli_query($conn, $query);
 
         $query = "select comment_id from comments where comments.date = '$date' and comment = '$comment'";
@@ -141,12 +140,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             ?> </p>
             <p> <?php
                 echo "Avg Rating : ";
-                if ($rating == false or mysqli_num_rows($rating)) {
+                if ($rating == false or mysqli_num_rows($rating) == 0) {
                     echo "0 from 0 ratings";
                 } else {
-                    echo $rating['rating'];
+                    $r = $rating->fetch_array(MYSQLI_ASSOC);
+                    echo $r['rating'];
                     echo " from ";
-                    echo $rating['cnt'];
+                    echo $r['cnt'];
                     echo " ratings";
                 }
             ?>

@@ -21,7 +21,7 @@ $rating_info = mysqli_fetch_array($rating_infoQ);
 $bookshelves_query = "select bs_name from bookshelves where user_id = '$profile_id'";
 $bookshelves = mysqli_query($conn, $bookshelves_query);
 
-$lists_query = "select list_name from lists where user_id = '$profile_id'";
+$lists_query = "select list_name, user_id from lists where user_id = '$profile_id'";
 $lists = mysqli_query($conn, $lists_query);
 
 $friends_query = "select username, account_id from friends f, accounts u where 
@@ -166,8 +166,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($bookshelves != false) {
                 while ($row = $bookshelves->fetch_array(MYSQLI_ASSOC)) {
                     echo "<tr>";
-                    $name = $row['bs_name'];
-                    echo "<td>" . $name . "</td>";
+                    echo "<td>";
+                    echo "<a href = 'bookshelf.php?bs_name=";
+                    echo $row['bs_name'];
+                    echo "&user_id=";
+                    echo $profile_id;
+                    echo "'>";
+                    echo $row['bs_name'];
+                    echo "</a>";
+                    echo "</td>";
                     $query = "select count(*) as cnt from bookshelf_includes where bs_name = '$name' and user_id = '$profile_id'";
                     $cntQ = mysqli_query($conn, $query);
                     $cnt = $cntQ->fetch_array(MYSQLI_ASSOC);
@@ -191,13 +198,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             ?>
             <p class="login_text" > Lists </p>
-            <table border = "2">
+            <table border = "3">
                 <tr><th> list </th></tr>
                 <?php
                 if ($lists != false) {
                     while ($row = $lists->fetch_array(MYSQLI_ASSOC)) {
                         echo "<tr>";
-                        echo "<td>" . $row['list_name'] . "</td>";
+                        echo "<td>";
+                        echo "<a href = 'list.php?list_name=";
+                        echo $row['list_name'];
+                        echo "&user_id=";
+                        echo $row['user_id'];
+                        echo "'>";
+                        echo $row['list_name'];
+                        echo "</a>";
+                        echo "</td>";
                         echo "</tr>";
                     }
                 }
