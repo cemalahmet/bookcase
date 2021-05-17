@@ -66,11 +66,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $row = $result->fetch_assoc();
                 $author_id = $row['author_id'];
 
-                $query = "INSERT INTO writes (author_id, b_id) 
-                            VALUES ('$author_id', '$bookid')";
-                $results = mysqli_query($conn, $query);
-                
-
                 $query = "INSERT INTO books (cover, title, year) 
                         VALUES ('$cover', '$bookTitle', '$publishedYear')";
                 $results = mysqli_query($conn, $query);
@@ -80,6 +75,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $row = $result1->fetch_assoc();
                 $bookid = $row['b_id'];
+
+                $query = "INSERT INTO writes (author_id, b_id) 
+                            VALUES ('$author_id', '$bookid')";
+                $results = mysqli_query($conn, $query);
 
                 // EDITION INSERTION
 
