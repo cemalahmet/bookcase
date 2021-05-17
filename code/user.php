@@ -45,11 +45,19 @@ function add_friend($conn, $user_id, $friend_id) {
     }
 }
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-  add_friend($conn, $user_id, $profile_id);
+function create_list($conn, $user_id, $list_name) {
+    $query = "insert into lists values ('$list_name', '$user_id')";
+    mysqli_query($conn, $query);
+}
 
-    $friends_query = "select username from friends, account where (user_id = '$profile_id' and friend_id = account_id) or (friend_id = '$profile_id' and user_id = account_id)";
-    $friends = mysqli_query($conn, $friends_query);
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['add_friend'])) {
+        add_friend($conn, $user_id, $profile_id);
+    }
+    if (isset($_POST['create_list'])) {
+        $list_name = $_POST['list_name'];
+        create_list($conn, $user_id, $list_name);
+    }
 }
 ?>
 <html lang="en">
@@ -82,7 +90,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
           if ($user_id != $profile_id) {
             echo "<form action='user.php' method='post'>";
 
-            echo "<input type='submit' class='btn btn-primary' style='width:100%;
+            echo "<input type='submit' name='add_friend' class='btn btn-primary' style='width:100%;
           background-color:#ff7f50 ; padding: 10px;font-size: medium;' value = ";
 
               $query = "select * from friends where (user_id = '$user_id' and '$profile_id' = friend_id) or (friend_id = '$user_id' and '$profile_id' = user_id)";
@@ -130,15 +138,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
             <p class="login_text"> Followed Authors: </p>
             <?php
-            echo "<p>";
-            if ($authors != false)
-                echo mysqli_num_rows($authors);
-            else
-                echo "0";
-            echo " followed authors";
-            echo "</p>";
-            echo "<ul>";
+                echo "<p>";
+                if ($authors != false)
+                    echo mysqli_num_rows($authors);
+                else
+                    echo "0";
+                echo " followed authors";
+                echo "</p>";
 
+                echo "<ul>";
             if ($authors != false and mysqli_num_rows($authors) != 0) {
 
                 while($row = $authors->fetch_array(MYSQLI_ASSOC)){
@@ -173,6 +181,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             ?>
         </table>
+            <?php
+
+            if ($user_id == $profile_id) {
+                echo "<form action = 'user.php' method = 'post' >
+                <input type = 'text' placeholder = 'list name' name = 'list_name' class = 'box' />
+                <input type = 'submit' name = 'create_list' class='btn btn-primary' style = 'width:100%;  background-color:#1e90ff ; padding: 10px;font-size: medium;' value = 'Create List' >
+                </form >";
+            }
+            ?>
             <p class="login_text" > Lists </p>
             <table border = "2">
                 <tr><th> list </th></tr>
@@ -188,9 +205,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             </table>
 
             <?php
-    $userId = $_SESSION['login_user'];
 
-    $sql = "SELECT challange_name, Info, due_date FROM challenges where challange_name  in (select challange_name from joins where user_id = $userId);";
+    $sql = "SELECT challange_name, Info, due_date FROM challenges where challange_name  in (select challange_name from joins where user_id = $user_id);";
     $result = mysqli_query($conn,$sql);
     ?>
 
