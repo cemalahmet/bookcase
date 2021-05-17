@@ -4,6 +4,7 @@ session_start();
 
 $bookTitle = "";
 $bookid = "";
+$author_id = "";
 $publishedYear = "";
 $pageCount = "";
 $author = "";
@@ -53,65 +54,83 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $emptyErr = "This book already registered in the system!";
         }
         else{
-            $query = "INSERT INTO books (cover, title, year) 
-                    VALUES ('$cover', '$bookTitle', '$publishedYear')";
-            $results = mysqli_query($conn, $query);
-            
-            $query = "SELECT b_id, title, year FROM books WHERE year = '$publishedYear'  AND title = '$bookTitle'";
-            $result1 = mysqli_query( $conn, $query );
 
-            $row = $result1->fetch_assoc();
-            $bookid = $row['b_id'];
+            // AUTHOR INSERTION
 
-            // EDITION INSERTION
-
-            $query = "INSERT INTO editions (b_id, edition_no, page_count, language, translator_name) 
-                    VALUES ('$bookid', '$edition', '$pageCount', '$language', '$translator')";
-            $results = mysqli_query($conn, $query);
-
-            // GENRE INSERTION
-
-            if(!empty($_POST['genre1'])){
-                $query = "INSERT INTO book_genre (b_id, genre) 
-                        VALUES ('$bookid', '$genre1')";
-                $results = mysqli_query($conn, $query);
+            $query = "SELECT author_name, author_id FROM authors WHERE author_name = '$author'";
+            $result = mysqli_query( $conn, $query );
+            if (mysqli_num_rows($result) == 0) {
+                header("location: addAuthor.php");
             }
-            if(!empty($_POST['genre2'])){
-                $query = "INSERT INTO book_genre (b_id, genre) 
-                        VALUES ('$bookid', '$genre2')";
-                $results = mysqli_query($conn, $query);
-            }
-            if(!empty($_POST['genre3'])){
-                $query = "INSERT INTO book_genre (b_id, genre) 
-                        VALUES ('$bookid', '$genre3')";
-                $results = mysqli_query($conn, $query);
-            }
-            if(!empty($_POST['genre4'])){
-                $query = "INSERT INTO book_genre (b_id, genre) 
-                        VALUES ('$bookid', '$genre4')";
-                $results = mysqli_query($conn, $query);
-            }
-            if(!empty($_POST['genre5'])){
-                $query = "INSERT INTO book_genre (b_id, genre) 
-                        VALUES ('$bookid', '$genre5')";
-                $results = mysqli_query($conn, $query);
-            }
+            else{
+                $row = $result->fetch_assoc();
+                $author_id = $row['author_id'];
 
-            // SERIES INSERTION
+                $query = "INSERT INTO writes (author_id, b_id) 
+                            VALUES ('$author_id', '$bookid')";
+                $results = mysqli_query($conn, $query);
+                
 
-            if(!empty($_POST['series'])){
-                $query = "SELECT s_name FROM series WHERE s_name = '$series'";
-                $result = mysqli_query( $conn, $query );
-                if (mysqli_num_rows($result) == 0) {
-                    $query = "INSERT INTO series (s_name) 
-                            VALUES ('$series')";
+                $query = "INSERT INTO books (cover, title, year) 
+                        VALUES ('$cover', '$bookTitle', '$publishedYear')";
+                $results = mysqli_query($conn, $query);
+                
+                $query = "SELECT b_id, title, year FROM books WHERE year = '$publishedYear'  AND title = '$bookTitle'";
+                $result1 = mysqli_query( $conn, $query );
+
+                $row = $result1->fetch_assoc();
+                $bookid = $row['b_id'];
+
+                // EDITION INSERTION
+
+                $query = "INSERT INTO editions (b_id, edition_no, page_count, language, translator_name) 
+                        VALUES ('$bookid', '$edition', '$pageCount', '$language', '$translator')";
+                $results = mysqli_query($conn, $query);
+
+                // GENRE INSERTION
+
+                if(!empty($_POST['genre1'])){
+                    $query = "INSERT INTO book_genre (b_id, genre) 
+                            VALUES ('$bookid', '$genre1')";
                     $results = mysqli_query($conn, $query);
                 }
-                $query = "INSERT INTO part_of_series (s_name, b_id) 
-                            VALUES ('$series', '$bookid')";
-                $results = mysqli_query($conn, $query);
-            }
+                if(!empty($_POST['genre2'])){
+                    $query = "INSERT INTO book_genre (b_id, genre) 
+                            VALUES ('$bookid', '$genre2')";
+                    $results = mysqli_query($conn, $query);
+                }
+                if(!empty($_POST['genre3'])){
+                    $query = "INSERT INTO book_genre (b_id, genre) 
+                            VALUES ('$bookid', '$genre3')";
+                    $results = mysqli_query($conn, $query);
+                }
+                if(!empty($_POST['genre4'])){
+                    $query = "INSERT INTO book_genre (b_id, genre) 
+                            VALUES ('$bookid', '$genre4')";
+                    $results = mysqli_query($conn, $query);
+                }
+                if(!empty($_POST['genre5'])){
+                    $query = "INSERT INTO book_genre (b_id, genre) 
+                            VALUES ('$bookid', '$genre5')";
+                    $results = mysqli_query($conn, $query);
+                }
 
+                // SERIES INSERTION
+
+                if(!empty($_POST['series'])){
+                    $query = "SELECT s_name FROM series WHERE s_name = '$series'";
+                    $result = mysqli_query( $conn, $query );
+                    if (mysqli_num_rows($result) == 0) {
+                        $query = "INSERT INTO series (s_name) 
+                                VALUES ('$series')";
+                        $results = mysqli_query($conn, $query);
+                    }
+                    $query = "INSERT INTO part_of_series (s_name, b_id) 
+                                VALUES ('$series', '$bookid')";
+                    $results = mysqli_query($conn, $query);
+                }
+                echo "Bravo!";
+            }
         }
     }
 }
